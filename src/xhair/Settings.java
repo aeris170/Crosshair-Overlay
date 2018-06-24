@@ -1,4 +1,5 @@
 package xhair;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
@@ -30,10 +31,10 @@ public class Settings extends JFrame {
 	// Preference key names
 	/** The Key Constant WIDTH. */
 	private static final String WIDTH = "width";
-	
+
 	/** The Key Constant HEIGHT. */
 	private static final String HEIGHT = "height";
-	
+
 	/** The Key Constant XHAIR. */
 	private static final String XHAIR = "img";
 
@@ -46,6 +47,7 @@ public class Settings extends JFrame {
 	 * Instantiates a new settings.
 	 */
 	public Settings() {
+		super("Crosshair-Overlay " + Overlay.VERSION + " Settings");
 		settingsPanel = new JPanel();
 		settingsPanel.setLayout(new BorderLayout());
 

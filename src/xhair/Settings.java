@@ -135,7 +135,7 @@ public class Settings extends JFrame {
 
 		widthAdjuster.setValue(prefs.getInt(WIDTH, 250));
 		heightAdjuster.setValue(prefs.getInt(HEIGHT, 250));
-		images.setSelectedIndex(prefs.getInt(XHAIR, 0));
+		images.setSelectedIndex(prefs.getInt(XHAIR, 1) - 1);
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class Settings extends JFrame {
 			// Set the value of the preferences
 			prefs.putInt(WIDTH, widthAdjuster.getValue());
 			prefs.putInt(HEIGHT, heightAdjuster.getValue());
-			prefs.putInt(XHAIR, images.getSelectedIndex());
+			prefs.putInt(XHAIR, images.getSelectedIndex() + 1);
 
 			// Save the changes to registry(if windows, else idk where)
 			prefs.flush();

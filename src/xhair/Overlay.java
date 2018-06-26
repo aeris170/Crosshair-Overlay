@@ -1,4 +1,5 @@
 package xhair;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -15,6 +16,7 @@ import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinUser;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Overlay. Crosshair-Overlay itself.
  *
@@ -29,7 +31,7 @@ public final class Overlay extends JWindow {
 
 	/** The Constant VERSION. */
 	public static final String VERSION = "1.0";
-	
+
 	/** The one and single instance of Overlay. */
 	private static Overlay INSTANCE = null;
 
@@ -41,7 +43,7 @@ public final class Overlay extends JWindow {
 	 */
 	private Overlay() {
 		xhair = new Crosshair();
-		super.setBackground(new Color(255, 255, 255, 0));
+		super.setBackground(new Color(0, 0, 0, 0));
 		super.setAlwaysOnTop(true);
 		super.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		super.setLocation(0, 0);
@@ -82,6 +84,26 @@ public final class Overlay extends JWindow {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+	}
+
+	/**
+	 * Sets the crosshair fill color.
+	 *
+	 * @param color the new crosshair fill color
+	 */
+	public void setCrosshairFillColor(final Color color) {
+		xhair.setCrosshairFillColor(color);
+		repaint();
+	}
+
+	/**
+	 * Sets the crosshair outline color.
+	 *
+	 * @param color the new crosshair outline color
+	 */
+	public void setCrosshairOutlineColor(final Color color) {
+		xhair.setCrosshairOutlineColor(color);
+		repaint();
 	}
 
 	/**
@@ -140,9 +162,15 @@ public final class Overlay extends JWindow {
 
 		/** The crosshair height. */
 		private int crosshairWidth, crosshairHeight;
-		
+
 		/** The crosshair image. */
 		private BufferedImage crosshairImage;
+
+		/** The crosshair fill color. */
+		private Color crosshairFillColor;
+
+		/** The crosshair surround color. */
+		private Color crosshairOutlineColor;
 
 		/**
 		 * Instantiates a new crosshair. Private.
@@ -195,6 +223,55 @@ public final class Overlay extends JWindow {
 		}
 
 		/**
+		 * Sets the crosshair fill color.
+		 *
+		 * @param crosshairFillColor the new crosshair fill color
+		 */
+		public void setCrosshairFillColor(final Color crosshairFillColor) {
+			this.crosshairFillColor = crosshairFillColor;
+		}
+
+		/**
+		 * Sets the crosshair outline color.
+		 *
+		 * @param crosshairOutlineColor the new crosshair outline color
+		 */
+		public void setCrosshairOutlineColor(final Color crosshairOutlineColor) {
+			this.crosshairOutlineColor = crosshairOutlineColor;
+		}
+
+		/**
+		 * Process ýmage.
+		 *
+		 * @param i the i
+		 * @param fill the fill
+		 * @param surround the surround
+		 * @return the buffered ýmage
+		 */
+		public BufferedImage processImage(BufferedImage i, Color fill, Color surround) {
+			if (i == null || fill == null || surround == null) {
+				return i;
+			}
+			BufferedImage rgb = new BufferedImage(i.getWidth(), i.getHeight(), BufferedImage.TYPE_INT_ARGB);
+			rgb.createGraphics().drawImage(i, 0, 0, this);
+			for (int xx = 0; xx < rgb.getWidth(); xx++) {
+				for (int yy = 0; yy < rgb.getHeight(); yy++) {
+					int pixel = rgb.getRGB(xx, yy);
+					int alpha = (pixel >> 24) & 0x0000FF;
+					int red = (pixel >> 16) & 0x0000FF;
+					int green = (pixel >> 8) & 0x0000FF;
+					int blue = pixel & 0x0000FF;
+					if (red > 55 && green > 55 && blue > 55 && alpha != 0) {
+						rgb.setRGB(xx, yy, fill.getRGB());
+					} else if (alpha != 0) {
+						rgb.setRGB(xx, yy, surround.getRGB());
+					}
+				}
+			}
+			return rgb;
+		}
+
+		/**
 		 * Sets the flag to hide the crosshair's icon.
 		 */
 		public void hideIcon() {
@@ -208,7 +285,8 @@ public final class Overlay extends JWindow {
 			show = true;
 		}
 
-		/* (non-Javadoc)
+		/*
+		 * (non-Javadoc)
 		 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 		 */
 		@Override
@@ -216,7 +294,7 @@ public final class Overlay extends JWindow {
 			if (show) {
 				final int crosshaitStartDrawX = (getWidth() - getCrosshairWidth()) / 2;
 				final int crosshaitStartDrawY = (getHeight() - getCrosshairHeight()) / 2;
-				g.drawImage(crosshairImage, crosshaitStartDrawX, crosshaitStartDrawY, getCrosshairWidth(), getCrosshairHeight(), this);
+				g.drawImage(processImage(crosshairImage, crosshairFillColor, crosshairOutlineColor), crosshaitStartDrawX, crosshaitStartDrawY, getCrosshairWidth(), getCrosshairHeight(), this);
 			}
 		}
 	}

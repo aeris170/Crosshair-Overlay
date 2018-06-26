@@ -182,7 +182,7 @@ public class Settings extends JFrame {
 		o.setCrosshairHeight(prefs.getInt(HEIGHT, 250));
 		o.setCrosshairImage(prefs.getInt(XHAIR, 1));
 		o.setCrosshairFillColor(new Color(prefs.getInt(XHAIR_FILL_R, 255), prefs.getInt(XHAIR_FILL_G, 255), prefs.getInt(XHAIR_FILL_B, 255), prefs.getInt(XHAIR_FILL_A, 255)));
-		o.setCrosshairOutlineColor(new Color(prefs.getInt(XHAIR_OUTLINE_R, 255), prefs.getInt(XHAIR_OUTLINE_G, 255), prefs.getInt(XHAIR_OUTLINE_B, 255), prefs.getInt(XHAIR_OUTLINE_A, 255)));
+		o.setCrosshairOutlineColor(new Color(prefs.getInt(XHAIR_OUTLINE_R, 0), prefs.getInt(XHAIR_OUTLINE_G, 0), prefs.getInt(XHAIR_OUTLINE_B, 0), prefs.getInt(XHAIR_OUTLINE_A, 255)));
 	}
 
 	/**

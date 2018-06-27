@@ -7,7 +7,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SpinSlider.
  *

@@ -3,6 +3,8 @@ package xhair;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -16,7 +18,6 @@ import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinUser;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Overlay. Crosshair-Overlay itself.
  *
@@ -291,10 +292,12 @@ public final class Overlay extends JWindow {
 		 */
 		@Override
 		public void paintComponent(Graphics g) {
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 			if (show) {
 				final int crosshaitStartDrawX = (getWidth() - getCrosshairWidth()) / 2;
 				final int crosshaitStartDrawY = (getHeight() - getCrosshairHeight()) / 2;
-				g.drawImage(processImage(crosshairImage, crosshairFillColor, crosshairOutlineColor), crosshaitStartDrawX, crosshaitStartDrawY, getCrosshairWidth(), getCrosshairHeight(), this);
+				g2d.drawImage(processImage(crosshairImage, crosshairFillColor, crosshairOutlineColor), crosshaitStartDrawX, crosshaitStartDrawY, getCrosshairWidth(), getCrosshairHeight(), this);
 			}
 		}
 	}

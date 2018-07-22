@@ -82,7 +82,7 @@ public final class Overlay extends JWindow {
 		try {
 			xhair.setCrosshairImage(CrosshairImageBank.getImage(index));
 			repaint();
-		} catch (IOException ex) {
+		} catch(IOException ex) {
 			ex.printStackTrace();
 		}
 	}
@@ -129,12 +129,11 @@ public final class Overlay extends JWindow {
 	 * @return the overlay
 	 */
 	public static Overlay get() {
-		if (INSTANCE != null) {
-			return INSTANCE;
-		} else {
-			INSTANCE = new Overlay();
+		if(INSTANCE != null) {
 			return INSTANCE;
 		}
+		INSTANCE = new Overlay();
+		return INSTANCE;
 	}
 
 	/**
@@ -176,7 +175,7 @@ public final class Overlay extends JWindow {
 		/**
 		 * Instantiates a new crosshair. Private.
 		 */
-		private Crosshair() {}
+		Crosshair() {}
 
 		/**
 		 * Gets the crosshair width.
@@ -244,27 +243,27 @@ public final class Overlay extends JWindow {
 		/**
 		 * Process ýmage.
 		 *
-		 * @param i the i
-		 * @param fill the fill
+		 * @param i        the i
+		 * @param fill     the fill
 		 * @param surround the surround
 		 * @return the buffered ýmage
 		 */
 		public BufferedImage processImage(BufferedImage i, Color fill, Color surround) {
-			if (i == null || fill == null || surround == null) {
+			if(i == null || fill == null || surround == null) {
 				return i;
 			}
 			BufferedImage rgb = new BufferedImage(i.getWidth(), i.getHeight(), BufferedImage.TYPE_INT_ARGB);
 			rgb.createGraphics().drawImage(i, 0, 0, this);
-			for (int xx = 0; xx < rgb.getWidth(); xx++) {
-				for (int yy = 0; yy < rgb.getHeight(); yy++) {
+			for(int xx = 0; xx < rgb.getWidth(); xx++) {
+				for(int yy = 0; yy < rgb.getHeight(); yy++) {
 					int pixel = rgb.getRGB(xx, yy);
 					int alpha = (pixel >> 24) & 0x0000FF;
 					int red = (pixel >> 16) & 0x0000FF;
 					int green = (pixel >> 8) & 0x0000FF;
 					int blue = pixel & 0x0000FF;
-					if (red > 55 && green > 55 && blue > 55 && alpha != 0) {
+					if(red > 55 && green > 55 && blue > 55 && alpha != 0) {
 						rgb.setRGB(xx, yy, fill.getRGB());
-					} else if (alpha != 0) {
+					} else if(alpha != 0) {
 						rgb.setRGB(xx, yy, surround.getRGB());
 					}
 				}
@@ -294,10 +293,11 @@ public final class Overlay extends JWindow {
 		public void paintComponent(Graphics g) {
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			if (show) {
+			if(show) {
 				final int crosshaitStartDrawX = (getWidth() - getCrosshairWidth()) / 2;
 				final int crosshaitStartDrawY = (getHeight() - getCrosshairHeight()) / 2;
-				g2d.drawImage(processImage(crosshairImage, crosshairFillColor, crosshairOutlineColor), crosshaitStartDrawX, crosshaitStartDrawY, getCrosshairWidth(), getCrosshairHeight(), this);
+				g2d.drawImage(processImage(crosshairImage, crosshairFillColor, crosshairOutlineColor), crosshaitStartDrawX, crosshaitStartDrawY, getCrosshairWidth(),
+						getCrosshairHeight(), this);
 			}
 		}
 	}

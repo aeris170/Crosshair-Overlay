@@ -1,5 +1,7 @@
 package xhair;
+
 import java.awt.FlowLayout;
+
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
@@ -13,7 +15,7 @@ import javax.swing.event.ChangeListener;
  * @author trashgod
  * @version 1.0
  * @since 1.0
- * @see https://stackoverflow.com/questions/6067898
+ * @see "https://stackoverflow.com/questions/6067898"
  */
 public class SpinSlider extends JPanel {
 
@@ -22,18 +24,19 @@ public class SpinSlider extends JPanel {
 
 	/** If the slider adjusts the crosshair width. */
 	public static final boolean WIDTH_ADJUSTER = true;
-	
+
 	/** If the slider adjusts the crosshair height. */
 	public static final boolean HEIGHT_ADJUSTER = false;
 
-	private boolean sliderFired = false;
-	private JSpinner spinner;
-	private JSlider slider;
+	boolean sliderFired = false;
+	JSpinner spinner;
+	JSlider slider;
 
 	/**
 	 * Instantiates a new spin slider.
 	 *
-	 * @param isWidthAdjuster flag to know whether this slider will adjust crosshair width, or height
+	 * @param isWidthAdjuster flag to know whether this slider will adjust
+	 *                        crosshair width, or height
 	 */
 	public SpinSlider(boolean isWidthAdjuster) {
 		this.setLayout(new FlowLayout());
@@ -50,12 +53,12 @@ public class SpinSlider extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSlider s = (JSlider) e.getSource();
-				if (isWidthAdjuster) {
+				if(isWidthAdjuster) {
 					Overlay.get().setCrosshairWidth(s.getValue());
 				} else {
 					Overlay.get().setCrosshairHeight(s.getValue());
 				}
-				if (!sliderFired) {
+				if(!sliderFired) {
 					spinner.setValue(s.getValue());
 				}
 			}
@@ -69,7 +72,7 @@ public class SpinSlider extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSpinner s = (JSpinner) e.getSource();
-				if (isWidthAdjuster) {
+				if(isWidthAdjuster) {
 					Overlay.get().setCrosshairWidth((int) s.getValue());
 				} else {
 					Overlay.get().setCrosshairHeight((int) s.getValue());
@@ -90,7 +93,7 @@ public class SpinSlider extends JPanel {
 	public int getValue() {
 		return slider.getValue();
 	}
-	
+
 	/**
 	 * Sets the value of the slider.
 	 *

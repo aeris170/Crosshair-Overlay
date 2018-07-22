@@ -88,7 +88,7 @@ public class Settings extends JFrame {
 		super("Crosshair-Overlay " + Overlay.VERSION + " Settings");
 		try {
 			super.setIconImage(ImageIO.read(getClass().getResourceAsStream("/trayIcon.png")));
-		} catch (IOException ex) {
+		} catch(IOException ex) {
 			System.exit(-2);
 		}
 		settingsPane = new JTabbedPane();
@@ -113,7 +113,7 @@ public class Settings extends JFrame {
 		outlineChooser = new JColorChooser();
 		outlineChooser.setPreviewPanel(new JPanel());
 
-		images = new JComboBox<ImageIcon>(CrosshairImageBank.supplyAllImagesAsIcons());
+		images = new JComboBox<>(CrosshairImageBank.supplyAllImagesAsIcons());
 		images.setMaximumRowCount(3);
 		images.setRenderer(new CustomRenderer());
 
@@ -135,7 +135,7 @@ public class Settings extends JFrame {
 		});
 
 		images.addActionListener(e -> {
-			Overlay.get().setCrosshairImage((int) images.getSelectedIndex() + 1);
+			Overlay.get().setCrosshairImage(images.getSelectedIndex() + 1);
 		});
 
 		center1.add(widthAdjuster);
@@ -182,14 +182,15 @@ public class Settings extends JFrame {
 		o.setCrosshairHeight(prefs.getInt(HEIGHT, 250));
 		o.setCrosshairImage(prefs.getInt(XHAIR, 1));
 		o.setCrosshairFillColor(new Color(prefs.getInt(XHAIR_FILL_R, 255), prefs.getInt(XHAIR_FILL_G, 255), prefs.getInt(XHAIR_FILL_B, 255), prefs.getInt(XHAIR_FILL_A, 255)));
-		o.setCrosshairOutlineColor(new Color(prefs.getInt(XHAIR_OUTLINE_R, 0), prefs.getInt(XHAIR_OUTLINE_G, 0), prefs.getInt(XHAIR_OUTLINE_B, 0), prefs.getInt(XHAIR_OUTLINE_A, 255)));
+		o.setCrosshairOutlineColor(
+				new Color(prefs.getInt(XHAIR_OUTLINE_R, 0), prefs.getInt(XHAIR_OUTLINE_G, 0), prefs.getInt(XHAIR_OUTLINE_B, 0), prefs.getInt(XHAIR_OUTLINE_A, 255)));
 	}
 
 	/**
 	 * Retrieves the user specified settings from the hierarchial node for this
 	 * class.
 	 */
-	private void retrieveSettingsFromHierarchialNode() {
+	void retrieveSettingsFromHierarchialNode() {
 		// Retrieve the user preference node for the this class
 		Preferences prefs = Preferences.userNodeForPackage(getClass());
 
@@ -197,13 +198,14 @@ public class Settings extends JFrame {
 		heightAdjuster.setValue(prefs.getInt(HEIGHT, 250));
 		images.setSelectedIndex(prefs.getInt(XHAIR, 1) - 1);
 		fillChooser.setColor(new Color(prefs.getInt(XHAIR_FILL_R, 255), prefs.getInt(XHAIR_FILL_G, 255), prefs.getInt(XHAIR_FILL_B, 255), prefs.getInt(XHAIR_FILL_A, 255)));
-		outlineChooser.setColor(new Color(prefs.getInt(XHAIR_OUTLINE_R, 0), prefs.getInt(XHAIR_OUTLINE_G, 0), prefs.getInt(XHAIR_OUTLINE_B, 0), prefs.getInt(XHAIR_OUTLINE_A, 255)));
+		outlineChooser
+				.setColor(new Color(prefs.getInt(XHAIR_OUTLINE_R, 0), prefs.getInt(XHAIR_OUTLINE_G, 0), prefs.getInt(XHAIR_OUTLINE_B, 0), prefs.getInt(XHAIR_OUTLINE_A, 255)));
 	}
 
 	/**
 	 * Saves the user specified settings to the hierarchial node for this class.
 	 */
-	private void saveNewSettingsToHierarchialNode() {
+	void saveNewSettingsToHierarchialNode() {
 		try {
 			// Retrieve the user preference node for this class
 			Preferences prefs = Preferences.userNodeForPackage(getClass());
@@ -227,7 +229,7 @@ public class Settings extends JFrame {
 
 			// Save the changes to registry(if windows, else idk where)
 			prefs.flush();
-		} catch (BackingStoreException ex) {
+		} catch(BackingStoreException ex) {
 			ex.printStackTrace();
 		}
 	}

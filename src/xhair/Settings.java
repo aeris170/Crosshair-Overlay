@@ -88,7 +88,7 @@ public class Settings extends JFrame {
 		super("Crosshair-Overlay " + Overlay.VERSION + " Settings");
 		try {
 			super.setIconImage(ImageIO.read(getClass().getResourceAsStream("/trayIcon.png")));
-		} catch(IOException ex) {
+		} catch(final IOException ex) {
 			System.exit(-2);
 		}
 		settingsPane = new JTabbedPane();
@@ -99,10 +99,10 @@ public class Settings extends JFrame {
 		settingsPanel2 = new JPanel();
 		settingsPanel2.setLayout(new BorderLayout());
 
-		JPanel center1 = new JPanel();
+		final JPanel center1 = new JPanel();
 		center1.setLayout(new BoxLayout(center1, BoxLayout.Y_AXIS));
 
-		JPanel center2 = new JPanel();
+		final JPanel center2 = new JPanel();
 		center2.setLayout(new BoxLayout(center2, BoxLayout.Y_AXIS));
 
 		widthAdjuster = new SpinSlider(SpinSlider.WIDTH_ADJUSTER);
@@ -162,7 +162,7 @@ public class Settings extends JFrame {
 		super.addWindowListener(new WindowAdapter() {
 
 			@Override
-			public void windowClosing(WindowEvent e) {
+			public void windowClosing(final WindowEvent e) {
 				retrieveSettingsFromHierarchialNode();
 				dispose();
 			}
@@ -175,15 +175,17 @@ public class Settings extends JFrame {
 	 */
 	public static void initializeSettings() {
 		// Retrieve the user preference node for the this class
-		Preferences prefs = Preferences.userNodeForPackage(Settings.class);
+		final Preferences prefs = Preferences.userNodeForPackage(Settings.class);
 
-		Overlay o = Overlay.get();
-		o.setCrosshairWidth(prefs.getInt(WIDTH, 250));
-		o.setCrosshairHeight(prefs.getInt(HEIGHT, 250));
-		o.setCrosshairImage(prefs.getInt(XHAIR, 1));
-		o.setCrosshairFillColor(new Color(prefs.getInt(XHAIR_FILL_R, 255), prefs.getInt(XHAIR_FILL_G, 255), prefs.getInt(XHAIR_FILL_B, 255), prefs.getInt(XHAIR_FILL_A, 255)));
+		final Overlay o = Overlay.get();
+		o.setCrosshairWidth(prefs.getInt(Settings.WIDTH, 250));
+		o.setCrosshairHeight(prefs.getInt(Settings.HEIGHT, 250));
+		o.setCrosshairImage(prefs.getInt(Settings.XHAIR, 1));
+		o.setCrosshairFillColor(new Color(prefs.getInt(Settings.XHAIR_FILL_R, 255), prefs.getInt(Settings.XHAIR_FILL_G, 255), prefs.getInt(Settings.XHAIR_FILL_B, 255),
+				prefs.getInt(Settings.XHAIR_FILL_A, 255)));
 		o.setCrosshairOutlineColor(
-				new Color(prefs.getInt(XHAIR_OUTLINE_R, 0), prefs.getInt(XHAIR_OUTLINE_G, 0), prefs.getInt(XHAIR_OUTLINE_B, 0), prefs.getInt(XHAIR_OUTLINE_A, 255)));
+				new Color(prefs.getInt(Settings.XHAIR_OUTLINE_R, 0), prefs.getInt(Settings.XHAIR_OUTLINE_G, 0), prefs.getInt(Settings.XHAIR_OUTLINE_B, 0),
+						prefs.getInt(Settings.XHAIR_OUTLINE_A, 255)));
 	}
 
 	/**
@@ -192,14 +194,16 @@ public class Settings extends JFrame {
 	 */
 	void retrieveSettingsFromHierarchialNode() {
 		// Retrieve the user preference node for the this class
-		Preferences prefs = Preferences.userNodeForPackage(getClass());
+		final Preferences prefs = Preferences.userNodeForPackage(getClass());
 
-		widthAdjuster.setValue(prefs.getInt(WIDTH, 250));
-		heightAdjuster.setValue(prefs.getInt(HEIGHT, 250));
-		images.setSelectedIndex(prefs.getInt(XHAIR, 1) - 1);
-		fillChooser.setColor(new Color(prefs.getInt(XHAIR_FILL_R, 255), prefs.getInt(XHAIR_FILL_G, 255), prefs.getInt(XHAIR_FILL_B, 255), prefs.getInt(XHAIR_FILL_A, 255)));
+		widthAdjuster.setValue(prefs.getInt(Settings.WIDTH, 250));
+		heightAdjuster.setValue(prefs.getInt(Settings.HEIGHT, 250));
+		images.setSelectedIndex(prefs.getInt(Settings.XHAIR, 1) - 1);
+		fillChooser.setColor(new Color(prefs.getInt(Settings.XHAIR_FILL_R, 255), prefs.getInt(Settings.XHAIR_FILL_G, 255), prefs.getInt(Settings.XHAIR_FILL_B, 255),
+				prefs.getInt(Settings.XHAIR_FILL_A, 255)));
 		outlineChooser
-				.setColor(new Color(prefs.getInt(XHAIR_OUTLINE_R, 0), prefs.getInt(XHAIR_OUTLINE_G, 0), prefs.getInt(XHAIR_OUTLINE_B, 0), prefs.getInt(XHAIR_OUTLINE_A, 255)));
+				.setColor(new Color(prefs.getInt(Settings.XHAIR_OUTLINE_R, 0), prefs.getInt(Settings.XHAIR_OUTLINE_G, 0), prefs.getInt(Settings.XHAIR_OUTLINE_B, 0),
+						prefs.getInt(Settings.XHAIR_OUTLINE_A, 255)));
 	}
 
 	/**
@@ -208,28 +212,28 @@ public class Settings extends JFrame {
 	void saveNewSettingsToHierarchialNode() {
 		try {
 			// Retrieve the user preference node for this class
-			Preferences prefs = Preferences.userNodeForPackage(getClass());
+			final Preferences prefs = Preferences.userNodeForPackage(getClass());
 
 			// Set the value of the preferences
-			prefs.putInt(WIDTH, widthAdjuster.getValue());
-			prefs.putInt(HEIGHT, heightAdjuster.getValue());
-			prefs.putInt(XHAIR, images.getSelectedIndex() + 1);
+			prefs.putInt(Settings.WIDTH, widthAdjuster.getValue());
+			prefs.putInt(Settings.HEIGHT, heightAdjuster.getValue());
+			prefs.putInt(Settings.XHAIR, images.getSelectedIndex() + 1);
 
 			Color c = fillChooser.getColor();
-			prefs.putInt(XHAIR_FILL_R, c.getRed());
-			prefs.putInt(XHAIR_FILL_G, c.getGreen());
-			prefs.putInt(XHAIR_FILL_B, c.getBlue());
-			prefs.putInt(XHAIR_FILL_A, c.getAlpha());
+			prefs.putInt(Settings.XHAIR_FILL_R, c.getRed());
+			prefs.putInt(Settings.XHAIR_FILL_G, c.getGreen());
+			prefs.putInt(Settings.XHAIR_FILL_B, c.getBlue());
+			prefs.putInt(Settings.XHAIR_FILL_A, c.getAlpha());
 
 			c = outlineChooser.getColor();
-			prefs.putInt(XHAIR_OUTLINE_R, c.getRed());
-			prefs.putInt(XHAIR_OUTLINE_G, c.getGreen());
-			prefs.putInt(XHAIR_OUTLINE_B, c.getBlue());
-			prefs.putInt(XHAIR_OUTLINE_A, c.getAlpha());
+			prefs.putInt(Settings.XHAIR_OUTLINE_R, c.getRed());
+			prefs.putInt(Settings.XHAIR_OUTLINE_G, c.getGreen());
+			prefs.putInt(Settings.XHAIR_OUTLINE_B, c.getBlue());
+			prefs.putInt(Settings.XHAIR_OUTLINE_A, c.getAlpha());
 
 			// Save the changes to registry(if windows, else idk where)
 			prefs.flush();
-		} catch(BackingStoreException ex) {
+		} catch(final BackingStoreException ex) {
 			ex.printStackTrace();
 		}
 	}

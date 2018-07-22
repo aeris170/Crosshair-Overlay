@@ -29,7 +29,7 @@ public final class CrosshairImageBank {
 	 * @return the image retrieved from the file system
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static BufferedImage getImage(String index) throws IOException {
+	public static BufferedImage getImage(final String index) throws IOException {
 		return ImageIO.read(CrosshairImageBank.class.getResourceAsStream("/crosshair" + index + ".png"));
 	}
 
@@ -40,13 +40,13 @@ public final class CrosshairImageBank {
 	 * @return the image retrieved from the file system
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static BufferedImage getImage(int index) throws IOException {
-		String s = new String("" + index);
-		if (s.length() == 3) {
+	public static BufferedImage getImage(final int index) throws IOException {
+		final String s = new String("" + index);
+		if(s.length() == 3) {
 			return CrosshairImageBank.getImage(s);
-		} else if (s.length() == 2) {
+		} else if(s.length() == 2) {
 			return CrosshairImageBank.getImage("0" + s);
-		} else if (s.length() == 1) {
+		} else if(s.length() == 1) {
 			return CrosshairImageBank.getImage("00" + s);
 		} else {
 			return null;
@@ -59,14 +59,14 @@ public final class CrosshairImageBank {
 	 * @return the image icon array
 	 */
 	public static ImageIcon[] supplyAllImagesAsIcons() {
-		List<ImageIcon> bf = new ArrayList<>();
+		final List<ImageIcon> bf = new ArrayList<>();
 		try {
 			int i = 1;
-			while (true) {
-				bf.add(new ImageIcon(getImage(i)));
+			while(true) {
+				bf.add(new ImageIcon(CrosshairImageBank.getImage(i)));
 				i++;
 			}
-		} catch (IOException | IllegalArgumentException ex) {} // swallow
+		} catch(IOException | IllegalArgumentException ex) {} // swallow
 		return bf.toArray(new ImageIcon[bf.size()]);
 	}
 }

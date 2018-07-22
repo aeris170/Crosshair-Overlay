@@ -26,25 +26,27 @@ public class CustomRenderer extends DefaultListCellRenderer {
 	/** The default background. */
 	private Color defaultBackground = (Color) UIManager.get("List.background");
 
-
-	/* (non-Javadoc)
-	 * @see javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax.
+	 * swing.JList, java.lang.Object, int, boolean, boolean)
 	 */
 	@Override
-	public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+	public Component getListCellRendererComponent(final JList<?> list, final Object value, final int index, final boolean isSelected, final boolean cellHasFocus) {
 		super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		try {
-			if (index != -1) {
-				this.setText("Crosshair " + index);
+			if(index != -1) {
+				setText("Crosshair " + index);
 			} else {
-				this.setText("Selected Crosshair");
+				setText("Selected Crosshair");
 			}
-			this.setIcon((Icon) value);
+			setIcon((Icon) value);
 			this.setSize(50, 50);
-			if (!isSelected) {
-				this.setBackground(index % 2 == 0 ? background : defaultBackground);
+			if(!isSelected) {
+				setBackground((index % 2) == 0 ? background : defaultBackground);
 			}
-		} catch (IllegalArgumentException ex) {} // swallow
+		} catch(final IllegalArgumentException ex) {} // swallow
 		return this;
 	}
 }

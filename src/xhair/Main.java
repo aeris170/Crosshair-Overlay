@@ -33,13 +33,13 @@ public class Main {
 	 *
 	 * @param args the arguments
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		SwingUtilities.invokeLater(() -> {
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {} // swallow
+			} catch(ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {} // swallow
 			Settings.initializeSettings();
-			createAndShowTray(Overlay.get());
+			Main.createAndShowTray(Overlay.get());
 		});
 	}
 
@@ -48,8 +48,8 @@ public class Main {
 	 *
 	 * @param overlay the crosshair-overlay
 	 */
-	private static void createAndShowTray(Overlay overlay) {
-		if (!SystemTray.isSupported()) {
+	private static void createAndShowTray(final Overlay overlay) {
+		if(!SystemTray.isSupported()) {
 			System.exit(-1);
 		}
 		final PopupMenu popup = new PopupMenu();
@@ -58,27 +58,27 @@ public class Main {
 		try {
 			bf = ImageIO.read(Main.class.getResourceAsStream("/trayIcon.png"));
 			trayIcon = new TrayIcon(bf, "Crosshair-Overlay " + Overlay.VERSION);
-		} catch (IOException | IllegalArgumentException ex) {
+		} catch(IOException | IllegalArgumentException ex) {
 			System.exit(-2);
 		}
 		final SystemTray tray = SystemTray.getSystemTray();
 
 		final CheckboxMenuItem hideItem = new CheckboxMenuItem("Hide Icon");
 		hideItem.addItemListener(e -> {
-			if (hideItem.getState()) {
+			if(hideItem.getState()) {
 				Overlay.get().hideIcon();
 			} else {
 				Overlay.get().showIcon();
 			}
 		});
-		
+
 		final Image aboutImage = new ImageIcon(bf).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 
 		final MenuItem aboutItem = new MenuItem("About");
 		aboutItem.addActionListener(e -> {
 			try {
 				JOptionPane.showMessageDialog(null, "Written to cheat in a game called TABG :)", "About", JOptionPane.OK_OPTION, new ImageIcon(aboutImage));
-			} catch (HeadlessException ex) {
+			} catch(final HeadlessException ex) {
 				ex.printStackTrace();
 			}
 		});
@@ -90,7 +90,7 @@ public class Main {
 
 		final MenuItem exitItem = new MenuItem("Exit");
 		exitItem.addActionListener(e -> {
-			for (TrayIcon ti : tray.getTrayIcons()) {
+			for(final TrayIcon ti : tray.getTrayIcons()) {
 				tray.remove(ti);
 			}
 			System.exit(0);
@@ -109,7 +109,7 @@ public class Main {
 
 		try {
 			tray.add(trayIcon);
-		} catch (AWTException e) {
+		} catch(final AWTException e) {
 			System.out.println("TrayIcon could not be added.");
 		}
 		trayIcon.displayMessage("Minimised", "Crosshair-Overlay is running in System Tray.", MessageType.INFO);

@@ -6,8 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  * The Class SpinSlider.
@@ -38,8 +36,8 @@ public class SpinSlider extends JPanel {
 	 * @param isWidthAdjuster flag to know whether this slider will adjust
 	 *                        crosshair width, or height
 	 */
-	public SpinSlider(boolean isWidthAdjuster) {
-		this.setLayout(new FlowLayout());
+	public SpinSlider(final boolean isWidthAdjuster) {
+		setLayout(new FlowLayout());
 
 		spinner = new JSpinner();
 		slider = new JSlider(0, 500, 250);
@@ -48,39 +46,31 @@ public class SpinSlider extends JPanel {
 		slider.setMajorTickSpacing(100);
 		slider.setPaintTicks(true);
 		slider.setSnapToTicks(true);
-		slider.addChangeListener(new ChangeListener() {
-
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				JSlider s = (JSlider) e.getSource();
-				if(isWidthAdjuster) {
-					Overlay.get().setCrosshairWidth(s.getValue());
-				} else {
-					Overlay.get().setCrosshairHeight(s.getValue());
-				}
-				if(!sliderFired) {
-					spinner.setValue(s.getValue());
-				}
+		slider.addChangeListener(e -> {
+			final JSlider s = (JSlider) e.getSource();
+			if(isWidthAdjuster) {
+				Overlay.get().setCrosshairWidth(s.getValue());
+			} else {
+				Overlay.get().setCrosshairHeight(s.getValue());
+			}
+			if(!sliderFired) {
+				spinner.setValue(s.getValue());
 			}
 		});
 		this.add(slider);
 
 		spinner.setModel(new SpinnerNumberModel(250, 0, 500, 1));
 		spinner.setEditor(new JSpinner.NumberEditor(spinner, "0'%'"));
-		spinner.addChangeListener(new ChangeListener() {
-
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				JSpinner s = (JSpinner) e.getSource();
-				if(isWidthAdjuster) {
-					Overlay.get().setCrosshairWidth((int) s.getValue());
-				} else {
-					Overlay.get().setCrosshairHeight((int) s.getValue());
-				}
-				sliderFired = true;
-				slider.setValue((int) s.getValue());
-				sliderFired = false;
+		spinner.addChangeListener(e -> {
+			final JSpinner s = (JSpinner) e.getSource();
+			if(isWidthAdjuster) {
+				Overlay.get().setCrosshairWidth((int) s.getValue());
+			} else {
+				Overlay.get().setCrosshairHeight((int) s.getValue());
 			}
+			sliderFired = true;
+			slider.setValue((int) s.getValue());
+			sliderFired = false;
 		});
 		this.add(spinner);
 	}
@@ -99,7 +89,7 @@ public class SpinSlider extends JPanel {
 	 *
 	 * @param value the new value
 	 */
-	public void setValue(int value) {
+	public void setValue(final int value) {
 		slider.setValue(value);
 	}
 }

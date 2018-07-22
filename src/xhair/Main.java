@@ -48,6 +48,7 @@ public class Main {
 	 *
 	 * @param overlay the crosshair-overlay
 	 */
+	@SuppressWarnings("null")
 	private static void createAndShowTray(final Overlay overlay) {
 		if(!SystemTray.isSupported()) {
 			System.exit(-1);

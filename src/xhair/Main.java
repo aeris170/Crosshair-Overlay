@@ -22,7 +22,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * Main Class.
  *
- * @author Doða Oruç <doga.oruc.tr@gmail.com>
+ * @author Doga Oruc <aeris170@gmail.com>
  * @version 1.01
  * @since 1.0
  */

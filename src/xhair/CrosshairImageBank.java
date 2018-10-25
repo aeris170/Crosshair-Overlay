@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 /**
  * The Class CrosshairImageBank.
  *
- * @author Doða Oruç <doga.oruc.tr@gmail.com>
+ * @author Doga Oruc <aeris170@gmail.com>
  * @version 1.0
  * @since 1.0
  */

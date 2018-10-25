@@ -23,7 +23,7 @@ import javax.swing.JTabbedPane;
 /**
  * The Settings Class.
  *
- * @author Doða Oruç <doga.oruc.tr@gmail.com>
+ * @author Doga Oruc <aeris170@gmail.com>
  * @version 1.0
  * @since 1.0
  */
@@ -158,12 +158,12 @@ public class Settings extends JFrame {
 		super.setResizable(false);
 		super.pack();
 		super.setLocationByPlatform(true);
-		retrieveSettingsFromHierarchialNode();
+		retrieveSettingsFromHierarchicalNode();
 		super.addWindowListener(new WindowAdapter() {
 
 			@Override
 			public void windowClosing(final WindowEvent e) {
-				retrieveSettingsFromHierarchialNode();
+				retrieveSettingsFromHierarchicalNode();
 				dispose();
 			}
 		});
@@ -171,7 +171,7 @@ public class Settings extends JFrame {
 	}
 
 	/**
-	 * Initialize settings to accurately represent saved data.
+	 * Initialise settings to accurately represent saved data.
 	 */
 	public static void initializeSettings() {
 		// Retrieve the user preference node for the this class
@@ -189,10 +189,10 @@ public class Settings extends JFrame {
 	}
 
 	/**
-	 * Retrieves the user specified settings from the hierarchial node for this
+	 * Retrieves the user specified settings from the hierarchical node for this
 	 * class.
 	 */
-	void retrieveSettingsFromHierarchialNode() {
+	void retrieveSettingsFromHierarchicalNode() {
 		// Retrieve the user preference node for the this class
 		final Preferences prefs = Preferences.userNodeForPackage(getClass());
 
@@ -207,9 +207,10 @@ public class Settings extends JFrame {
 	}
 
 	/**
-	 * Saves the user specified settings to the hierarchial node for this class.
+	 * Saves the user specified settings to the hierarchical node for this
+	 * class.
 	 */
-	void saveNewSettingsToHierarchialNode() {
+	void saveNewSettingsToHierarchicalNode() {
 		try {
 			// Retrieve the user preference node for this class
 			final Preferences prefs = Preferences.userNodeForPackage(getClass());
@@ -241,7 +242,7 @@ public class Settings extends JFrame {
 	/**
 	 * SouthPanel class is created because I needed to supply the "OK" and
 	 * "Cancel" buttons more than once. In order to supply the same two buttons
-	 * without cobfuscating the code, this class is created.
+	 * without obfuscating the code, this class is created.
 	 */
 	private class SouthPanel extends JPanel {
 
@@ -258,13 +259,13 @@ public class Settings extends JFrame {
 
 			applyButton = new JButton("  OK  ");
 			applyButton.addActionListener(e -> {
-				saveNewSettingsToHierarchialNode();
+				saveNewSettingsToHierarchicalNode();
 				dispose();
 			});
 
 			cancelButton = new JButton("Cancel");
 			cancelButton.addActionListener(e -> {
-				retrieveSettingsFromHierarchialNode();
+				retrieveSettingsFromHierarchicalNode();
 				dispose();
 			});
 

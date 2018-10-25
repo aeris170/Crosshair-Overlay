@@ -21,7 +21,7 @@ import com.sun.jna.platform.win32.WinUser;
 /**
  * The Class Overlay. Crosshair-Overlay itself.
  *
- * @author Doða Oruç <doga.oruc.tr@gmail.com>
+ * @author Doga Oruc <aeris170@gmail.com>
  * @version 1.0
  * @since 1.0
  */
@@ -241,12 +241,12 @@ public final class Overlay extends JWindow {
 		}
 
 		/**
-		 * Process ýmage.
+		 * Process ï¿½mage.
 		 *
 		 * @param i        the i
 		 * @param fill     the fill
 		 * @param surround the surround
-		 * @return the buffered ýmage
+		 * @return the buffered ï¿½mage
 		 */
 		public BufferedImage processImage(final BufferedImage i, final Color fill, final Color surround) {
 			if((i == null) || (fill == null) || (surround == null)) {

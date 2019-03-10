@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 /**
  * The Class CrosshairImageBank.
  *
- * @author Doga Oruc <aeris170@gmail.com>
+ * @author Doga Oruc
  * @version 1.0
  * @since 1.0
  */
@@ -41,12 +41,12 @@ public final class CrosshairImageBank {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static BufferedImage getImage(final int index) throws IOException {
-		final String s = new String("" + index);
-		if(s.length() == 3) {
+		final String s = String.valueOf(index);
+		if (s.length() == 3) {
 			return CrosshairImageBank.getImage(s);
-		} else if(s.length() == 2) {
+		} else if (s.length() == 2) {
 			return CrosshairImageBank.getImage("0" + s);
-		} else if(s.length() == 1) {
+		} else if (s.length() == 1) {
 			return CrosshairImageBank.getImage("00" + s);
 		} else {
 			return null;
@@ -58,15 +58,18 @@ public final class CrosshairImageBank {
 	 *
 	 * @return the image icon array
 	 */
+	@SuppressWarnings("unused")
 	public static ImageIcon[] supplyAllImagesAsIcons() {
 		final List<ImageIcon> bf = new ArrayList<>();
+		int i = 1;
 		try {
-			int i = 1;
-			while(true) {
+			for (; true; i++) {
 				bf.add(new ImageIcon(CrosshairImageBank.getImage(i)));
-				i++;
 			}
-		} catch(IOException | IllegalArgumentException ex) {} // swallow
+		} catch (IOException | IllegalArgumentException ex) {
+			System.out.println("STOPPING...");
+			System.out.println("Found " + (i - 1) + " images.");
+		}
 		return bf.toArray(new ImageIcon[bf.size()]);
 	}
 }

@@ -21,7 +21,7 @@ import com.sun.jna.platform.win32.WinUser;
 /**
  * The Class Overlay. Crosshair-Overlay itself.
  *
- * @author Doga Oruc <aeris170@gmail.com>
+ * @author Doga Oruc
  * @version 1.0
  * @since 1.0
  */
@@ -82,7 +82,7 @@ public final class Overlay extends JWindow {
 		try {
 			xhair.setCrosshairImage(CrosshairImageBank.getImage(index));
 			repaint();
-		} catch(final IOException ex) {
+		} catch (final IOException ex) {
 			ex.printStackTrace();
 		}
 	}
@@ -129,7 +129,7 @@ public final class Overlay extends JWindow {
 	 * @return the overlay
 	 */
 	public static Overlay get() {
-		if(Overlay.INSTANCE != null) {
+		if (Overlay.INSTANCE != null) {
 			return Overlay.INSTANCE;
 		}
 		Overlay.INSTANCE = new Overlay();
@@ -164,7 +164,7 @@ public final class Overlay extends JWindow {
 		private int crosshairWidth, crosshairHeight;
 
 		/** The crosshair image. */
-		private BufferedImage crosshairImage;
+		private transient BufferedImage crosshairImage;
 
 		/** The crosshair fill color. */
 		private Color crosshairFillColor;
@@ -243,27 +243,27 @@ public final class Overlay extends JWindow {
 		/**
 		 * Process �mage.
 		 *
-		 * @param i        the i
-		 * @param fill     the fill
+		 * @param i the i
+		 * @param fill the fill
 		 * @param surround the surround
 		 * @return the buffered �mage
 		 */
 		public BufferedImage processImage(final BufferedImage i, final Color fill, final Color surround) {
-			if((i == null) || (fill == null) || (surround == null)) {
+			if (i == null || fill == null || surround == null) {
 				return i;
 			}
 			final BufferedImage rgb = new BufferedImage(i.getWidth(), i.getHeight(), BufferedImage.TYPE_INT_ARGB);
 			rgb.createGraphics().drawImage(i, 0, 0, this);
-			for(int xx = 0; xx < rgb.getWidth(); xx++) {
-				for(int yy = 0; yy < rgb.getHeight(); yy++) {
+			for (int xx = 0; xx < rgb.getWidth(); xx++) {
+				for (int yy = 0; yy < rgb.getHeight(); yy++) {
 					final int pixel = rgb.getRGB(xx, yy);
-					final int alpha = (pixel >> 24) & 0x0000FF;
-					final int red = (pixel >> 16) & 0x0000FF;
-					final int green = (pixel >> 8) & 0x0000FF;
+					final int alpha = pixel >> 24 & 0x0000FF;
+					final int red = pixel >> 16 & 0x0000FF;
+					final int green = pixel >> 8 & 0x0000FF;
 					final int blue = pixel & 0x0000FF;
-					if((red > 55) && (green > 55) && (blue > 55) && (alpha != 0)) {
+					if (red > 55 && green > 55 && blue > 55 && alpha != 0) {
 						rgb.setRGB(xx, yy, fill.getRGB());
-					} else if(alpha != 0) {
+					} else if (alpha != 0) {
 						rgb.setRGB(xx, yy, surround.getRGB());
 					}
 				}
@@ -285,19 +285,17 @@ public final class Overlay extends JWindow {
 			show = true;
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
-		 */
+		/* (non-Javadoc)
+		 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics) */
 		@Override
 		public void paintComponent(final Graphics g) {
 			final Graphics2D g2d = (Graphics2D) g;
 			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			if(show) {
+			if (show) {
 				final int crosshaitStartDrawX = (getWidth() - getCrosshairWidth()) / 2;
 				final int crosshaitStartDrawY = (getHeight() - getCrosshairHeight()) / 2;
 				g2d.drawImage(processImage(crosshairImage, crosshairFillColor, crosshairOutlineColor), crosshaitStartDrawX, crosshaitStartDrawY, getCrosshairWidth(),
-						getCrosshairHeight(), this);
+				        getCrosshairHeight(), this);
 			}
 		}
 	}

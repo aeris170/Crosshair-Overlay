@@ -23,7 +23,7 @@ import javax.swing.JTabbedPane;
 /**
  * The Settings Class.
  *
- * @author Doga Oruc <aeris170@gmail.com>
+ * @author Doga Oruc
  * @version 1.0
  * @since 1.0
  */
@@ -34,9 +34,11 @@ public class Settings extends JFrame {
 
 	// Preference key names
 	/** The Key Constant WIDTH. */
+	@SuppressWarnings("hiding")
 	private static final String WIDTH = "width";
 
 	/** The Key Constant HEIGHT. */
+	@SuppressWarnings("hiding")
 	private static final String HEIGHT = "height";
 
 	/** The Key Constant XHAIR. */
@@ -88,7 +90,8 @@ public class Settings extends JFrame {
 		super("Crosshair-Overlay " + Overlay.VERSION + " Settings");
 		try {
 			super.setIconImage(ImageIO.read(getClass().getResourceAsStream("/trayIcon.png")));
-		} catch(final IOException ex) {
+		} catch (final IOException ex) {
+			ex.printStackTrace();
 			System.exit(-2);
 		}
 		settingsPane = new JTabbedPane();
@@ -126,17 +129,11 @@ public class Settings extends JFrame {
 
 		images.setBorder(BorderFactory.createTitledBorder("Crosshair Image"));
 
-		fillChooser.getSelectionModel().addChangeListener(e -> {
-			Overlay.get().setCrosshairFillColor(fillChooser.getColor());
-		});
+		fillChooser.getSelectionModel().addChangeListener(e -> Overlay.get().setCrosshairFillColor(fillChooser.getColor()));
 
-		outlineChooser.getSelectionModel().addChangeListener(e -> {
-			Overlay.get().setCrosshairOutlineColor(outlineChooser.getColor());
-		});
+		outlineChooser.getSelectionModel().addChangeListener(e -> Overlay.get().setCrosshairOutlineColor(outlineChooser.getColor()));
 
-		images.addActionListener(e -> {
-			Overlay.get().setCrosshairImage(images.getSelectedIndex() + 1);
-		});
+		images.addActionListener(e -> Overlay.get().setCrosshairImage(images.getSelectedIndex() + 1));
 
 		center1.add(widthAdjuster);
 		center1.add(heightAdjuster);
@@ -182,10 +179,9 @@ public class Settings extends JFrame {
 		o.setCrosshairHeight(prefs.getInt(Settings.HEIGHT, 250));
 		o.setCrosshairImage(prefs.getInt(Settings.XHAIR, 1));
 		o.setCrosshairFillColor(new Color(prefs.getInt(Settings.XHAIR_FILL_R, 255), prefs.getInt(Settings.XHAIR_FILL_G, 255), prefs.getInt(Settings.XHAIR_FILL_B, 255),
-				prefs.getInt(Settings.XHAIR_FILL_A, 255)));
-		o.setCrosshairOutlineColor(
-				new Color(prefs.getInt(Settings.XHAIR_OUTLINE_R, 0), prefs.getInt(Settings.XHAIR_OUTLINE_G, 0), prefs.getInt(Settings.XHAIR_OUTLINE_B, 0),
-						prefs.getInt(Settings.XHAIR_OUTLINE_A, 255)));
+		        prefs.getInt(Settings.XHAIR_FILL_A, 255)));
+		o.setCrosshairOutlineColor(new Color(prefs.getInt(Settings.XHAIR_OUTLINE_R, 0), prefs.getInt(Settings.XHAIR_OUTLINE_G, 0),
+		        prefs.getInt(Settings.XHAIR_OUTLINE_B, 0), prefs.getInt(Settings.XHAIR_OUTLINE_A, 255)));
 	}
 
 	/**
@@ -200,15 +196,13 @@ public class Settings extends JFrame {
 		heightAdjuster.setValue(prefs.getInt(Settings.HEIGHT, 250));
 		images.setSelectedIndex(prefs.getInt(Settings.XHAIR, 1) - 1);
 		fillChooser.setColor(new Color(prefs.getInt(Settings.XHAIR_FILL_R, 255), prefs.getInt(Settings.XHAIR_FILL_G, 255), prefs.getInt(Settings.XHAIR_FILL_B, 255),
-				prefs.getInt(Settings.XHAIR_FILL_A, 255)));
-		outlineChooser
-				.setColor(new Color(prefs.getInt(Settings.XHAIR_OUTLINE_R, 0), prefs.getInt(Settings.XHAIR_OUTLINE_G, 0), prefs.getInt(Settings.XHAIR_OUTLINE_B, 0),
-						prefs.getInt(Settings.XHAIR_OUTLINE_A, 255)));
+		        prefs.getInt(Settings.XHAIR_FILL_A, 255)));
+		outlineChooser.setColor(new Color(prefs.getInt(Settings.XHAIR_OUTLINE_R, 0), prefs.getInt(Settings.XHAIR_OUTLINE_G, 0), prefs.getInt(Settings.XHAIR_OUTLINE_B, 0),
+		        prefs.getInt(Settings.XHAIR_OUTLINE_A, 255)));
 	}
 
 	/**
-	 * Saves the user specified settings to the hierarchical node for this
-	 * class.
+	 * Saves the user specified settings to the hierarchical node for this class.
 	 */
 	void saveNewSettingsToHierarchicalNode() {
 		try {
@@ -234,15 +228,15 @@ public class Settings extends JFrame {
 
 			// Save the changes to registry(if windows, else idk where)
 			prefs.flush();
-		} catch(final BackingStoreException ex) {
+		} catch (final BackingStoreException ex) {
 			ex.printStackTrace();
 		}
 	}
 
 	/**
-	 * SouthPanel class is created because I needed to supply the "OK" and
-	 * "Cancel" buttons more than once. In order to supply the same two buttons
-	 * without obfuscating the code, this class is created.
+	 * SouthPanel class is created because I needed to supply the "OK" and "Cancel"
+	 * buttons more than once. In order to supply the same two buttons without
+	 * obfuscating the code, this class is created.
 	 */
 	private class SouthPanel extends JPanel {
 

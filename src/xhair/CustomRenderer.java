@@ -11,7 +11,7 @@ import javax.swing.UIManager;
 /**
  * The Class CustomRenderer. Used to decorate Crosshair Selection ComboBox.
  *
- * @author Doga Oruc <aeris170@gmail.com>
+ * @author Doga Oruc
  * @version 1.0
  * @since 1.0
  */
@@ -21,32 +21,31 @@ public class CustomRenderer extends DefaultListCellRenderer {
 	private static final long serialVersionUID = 1395980151667453312L;
 
 	/** The background color of n'th elements where n % 2 == 0. */
-	private Color background = new Color(0, 100, 255, 15);
+	private Color currentBackground = new Color(0, 100, 255, 15);
 
 	/** The default background. */
 	private Color defaultBackground = (Color) UIManager.get("List.background");
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax.
-	 * swing.JList, java.lang.Object, int, boolean, boolean)
-	 */
+	/* (non-Javadoc)
+	 * @see javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax.
+	 * swing.JList, java.lang.Object, int, boolean, boolean) */
 	@Override
 	public Component getListCellRendererComponent(final JList<?> list, final Object value, final int index, final boolean isSelected, final boolean cellHasFocus) {
 		super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		try {
-			if(index != -1) {
+			if (index != -1) {
 				setText("Crosshair " + index);
 			} else {
 				setText("Selected Crosshair");
 			}
 			setIcon((Icon) value);
 			this.setSize(50, 50);
-			if(!isSelected) {
-				setBackground((index % 2) == 0 ? background : defaultBackground);
+			if (!isSelected) {
+				setBackground(index % 2 == 0 ? currentBackground : defaultBackground);
 			}
-		} catch(final IllegalArgumentException ex) {} // swallow
+		} catch (final IllegalArgumentException ex) {
+			ex.printStackTrace();
+		}
 		return this;
 	}
 }

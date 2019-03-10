@@ -33,8 +33,8 @@ public class SpinSlider extends JPanel {
 	/**
 	 * Instantiates a new spin slider.
 	 *
-	 * @param isWidthAdjuster flag to know whether this slider will adjust
-	 *                        crosshair width, or height
+	 * @param isWidthAdjuster flag to know whether this slider will adjust crosshair
+	 *        width, or height
 	 */
 	public SpinSlider(final boolean isWidthAdjuster) {
 		setLayout(new FlowLayout());
@@ -48,12 +48,12 @@ public class SpinSlider extends JPanel {
 		slider.setSnapToTicks(true);
 		slider.addChangeListener(e -> {
 			final JSlider s = (JSlider) e.getSource();
-			if(isWidthAdjuster) {
+			if (isWidthAdjuster) {
 				Overlay.get().setCrosshairWidth(s.getValue());
 			} else {
 				Overlay.get().setCrosshairHeight(s.getValue());
 			}
-			if(!sliderFired) {
+			if (!sliderFired) {
 				spinner.setValue(s.getValue());
 			}
 		});
@@ -63,7 +63,7 @@ public class SpinSlider extends JPanel {
 		spinner.setEditor(new JSpinner.NumberEditor(spinner, "0'%'"));
 		spinner.addChangeListener(e -> {
 			final JSpinner s = (JSpinner) e.getSource();
-			if(isWidthAdjuster) {
+			if (isWidthAdjuster) {
 				Overlay.get().setCrosshairWidth((int) s.getValue());
 			} else {
 				Overlay.get().setCrosshairHeight((int) s.getValue());

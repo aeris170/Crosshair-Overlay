@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="lib/jna-5.1.0.jar" sourcepath="lib/jna-5.1.0.jar"/>
-	<classpathentry kind="lib" path="lib/jna-platform-5.1.0.jar" sourcepath="C:/Users/Doga/AppData/Local/Temp/.org.sf.feeling.decompiler1551918752702/source/jna-platform-5.1.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/jna-5.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/jna-platform-5.1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

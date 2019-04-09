@@ -9,7 +9,7 @@ A program to draw one of numerous crosshairs on player's screen. Especially help
   * Only works on windowless-fullscreen mode.
   * Ability to add new crosshairs.
 	
-## Dependancies: 
+## Dependencies: 
   * [JNA](https://github.com/java-native-access/jna)
 
 ## Applications of X-Hair Overlay:

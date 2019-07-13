@@ -23,7 +23,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * Main Class.
  *
  * @author Doga Oruc
- * @version 1.01
+ * @version 1.1
  * @since 1.0
  */
 public class Main {
@@ -47,8 +47,6 @@ public class Main {
 
 	/**
 	 * Creates and shows the tray icon and it's components.
-	 *
-	 * @param overlay the crosshair-overlay
 	 */
 	private static void createAndShowTray() {
 		if (!SystemTray.isSupported()) {

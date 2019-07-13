@@ -22,7 +22,7 @@ import com.sun.jna.platform.win32.WinUser;
  * The Class Overlay. Crosshair-Overlay itself.
  *
  * @author Doga Oruc
- * @version 1.0
+ * @version 1.1
  * @since 1.0
  */
 public final class Overlay extends JWindow {
@@ -160,8 +160,11 @@ public final class Overlay extends JWindow {
 		/** boolean to indicate whether the crosshair should be shown or not. */
 		private boolean show = true;
 
+		/** The crosshair width. */
+		private int crosshairWidth;
+
 		/** The crosshair height. */
-		private int crosshairWidth, crosshairHeight;
+		private int crosshairHeight;
 
 		/** The crosshair image. */
 		private transient BufferedImage crosshairImage;

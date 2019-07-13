@@ -13,7 +13,7 @@ import javax.swing.UIManager;
  * The Class CustomRenderer. Used to decorate Crosshair Selection ComboBox.
  *
  * @author Doga Oruc
- * @version 1.0
+ * @version 1.1
  * @since 1.0
  */
 public class CustomRenderer extends DefaultListCellRenderer {

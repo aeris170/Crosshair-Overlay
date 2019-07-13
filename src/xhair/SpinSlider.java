@@ -11,7 +11,7 @@ import javax.swing.SpinnerNumberModel;
  * The Class SpinSlider.
  *
  * @author trashgod
- * @version 1.0
+ * @version 1.1
  * @since 1.0
  * @see "https://stackoverflow.com/questions/6067898"
  */

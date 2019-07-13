@@ -298,6 +298,12 @@ public class Settings extends JFrame {
 		}
 	}
 
+	/**
+	 * Creates a crosshair serialization data based on the current slider/chooser
+	 * values.
+	 * 
+	 * @return the serialization data
+	 */
 	private CrosshairSerializationData supplyCurrentInstance() {
 		CrosshairSerializationData csd = new CrosshairSerializationData();
 		csd.setWidth(widthAdjuster.getValue());
@@ -308,6 +314,11 @@ public class Settings extends JFrame {
 		return csd;
 	}
 
+	/**
+	 * Sets the slider/chooser values based on the passed data.
+	 * 
+	 * @param csd serialization data to be converted to slider/chooser values
+	 */
 	private void processInstanceData(CrosshairSerializationData csd) {
 		widthAdjuster.setValue(csd.getWidth());
 		heightAdjuster.setValue(csd.getHeight());

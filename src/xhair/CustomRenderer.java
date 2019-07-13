@@ -2,9 +2,10 @@ package xhair;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Image;
 
 import javax.swing.DefaultListCellRenderer;
-import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.UIManager;
 
@@ -38,8 +39,7 @@ public class CustomRenderer extends DefaultListCellRenderer {
 			} else {
 				setText("Selected Crosshair");
 			}
-			setIcon((Icon) value);
-			this.setSize(50, 50);
+			setIcon(new ImageIcon(((ImageIcon) value).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
 			if (!isSelected) {
 				setBackground(index % 2 == 0 ? currentBackground : defaultBackground);
 			}

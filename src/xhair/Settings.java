@@ -6,7 +6,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -18,9 +23,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * The Settings Class.
@@ -130,8 +138,8 @@ public class Settings extends JFrame {
 		outlineChooser = new JColorChooser();
 		outlineChooser.setPreviewPanel(new JPanel());
 
-		saveButton = new JButton("Save Current Crosshair");
-		loadButton = new JButton("Load A Crosshair");
+		saveButton = new JButton("Save Current Crosshair Configuration");
+		loadButton = new JButton("Load A Crosshair Configuration");
 
 		images = new JComboBox<>(CrosshairImageBank.supplyAllImagesAsIcons());
 		images.setMaximumRowCount(6);
@@ -149,6 +157,38 @@ public class Settings extends JFrame {
 		fillChooser.getSelectionModel().addChangeListener(e -> Overlay.get().setCrosshairFillColor(fillChooser.getColor()));
 
 		outlineChooser.getSelectionModel().addChangeListener(e -> Overlay.get().setCrosshairOutlineColor(outlineChooser.getColor()));
+
+		saveButton.addActionListener(e -> {
+			JFileChooser fc = new JFileChooser();
+			fc.removeChoosableFileFilter(fc.getFileFilter());
+			fc.addChoosableFileFilter(new FileNameExtensionFilter("Crosshair Overlay Crosshair Configuration (*.xhc)", "xhc"));
+			fc.setSelectedFile(new File("myCrosshairConfig.xhc"));
+			if (fc.showSaveDialog(getParent()) == JFileChooser.APPROVE_OPTION) {
+				File selectedFile = fc.getSelectedFile();
+				fc.setSelectedFile(selectedFile.toString().endsWith(".xhc") ? selectedFile : new File(selectedFile.toString() + ".xhc"));
+				try (FileOutputStream file = new FileOutputStream(selectedFile.toString()); ObjectOutputStream out = new ObjectOutputStream(file)) {
+					out.writeObject(supplyCurrentInstance());
+				} catch (IOException ex) {
+					JOptionPane.showMessageDialog(this, "Error while saving crosshair!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					ex.printStackTrace();
+				}
+			}
+		});
+
+		loadButton.addActionListener(e -> {
+			JFileChooser fc = new JFileChooser();
+			fc.removeChoosableFileFilter(fc.getFileFilter());
+			fc.addChoosableFileFilter(new FileNameExtensionFilter("Crosshair Overlay Crosshair Configuration (*.xhc)", "xhc"));
+			if (fc.showSaveDialog(getParent()) == JFileChooser.APPROVE_OPTION) {
+				File selectedFile = fc.getSelectedFile();
+				try (FileInputStream file = new FileInputStream(selectedFile.toString()); ObjectInputStream in = new ObjectInputStream(file)) {
+					processInstanceData((CrosshairSerializationData) in.readObject());
+				} catch (IOException | ClassNotFoundException ex) {
+					JOptionPane.showMessageDialog(this, "Error while loading crosshair!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					ex.printStackTrace();
+				}
+			}
+		});
 
 		images.addActionListener(e -> Overlay.get().setCrosshairImage(images.getSelectedIndex() + 1));
 
@@ -258,6 +298,24 @@ public class Settings extends JFrame {
 		}
 	}
 
+	private CrosshairSerializationData supplyCurrentInstance() {
+		CrosshairSerializationData csd = new CrosshairSerializationData();
+		csd.setWidth(widthAdjuster.getValue());
+		csd.setHeight(heightAdjuster.getValue());
+		csd.setImageIndex(images.getSelectedIndex());
+		csd.setFillColor(fillChooser.getColor());
+		csd.setOutlineColor(outlineChooser.getColor());
+		return csd;
+	}
+
+	private void processInstanceData(CrosshairSerializationData csd) {
+		widthAdjuster.setValue(csd.getWidth());
+		heightAdjuster.setValue(csd.getHeight());
+		images.setSelectedIndex(csd.getImageIndex());
+		fillChooser.setColor(csd.getFillColor());
+		outlineChooser.setColor(csd.getOutlineColor());
+	}
+
 	/**
 	 * SouthPanel class is created because I needed to supply the "OK" and "Cancel"
 	 * buttons more than once. In order to supply the same two buttons without
@@ -295,4 +353,5 @@ public class Settings extends JFrame {
 			super.add(Box.createHorizontalStrut(25));
 		}
 	}
+
 }

@@ -1,6 +1,15 @@
 # CrosshairOverlay
 A program to draw one of numerous crosshairs on player's screen. Especially helpful when playing games that disables crosshairs.
 
+## Install
+
+- Download the [CrosshairOverlay 1.1.jar](https://github.com/aeris170/Crosshair-Overlay/raw/master/CrosshairOverlay%201.1.jar).
+
+## Usage
+
+- Launch the jar file.
+- Play with the sliders and choosers to adjust the crosshair to your liking.
+
 ## Features:
   * Choose between 200 stock crosshairs.
   * Change crosshair/outline color.

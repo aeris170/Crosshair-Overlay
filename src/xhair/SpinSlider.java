@@ -45,7 +45,6 @@ public class SpinSlider extends JPanel {
 		slider.setMinorTickSpacing(25);
 		slider.setMajorTickSpacing(100);
 		slider.setPaintTicks(true);
-		slider.setSnapToTicks(true);
 		slider.addChangeListener(e -> {
 			final JSlider s = (JSlider) e.getSource();
 			if (isWidthAdjuster) {

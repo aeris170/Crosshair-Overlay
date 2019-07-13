@@ -31,7 +31,7 @@ public final class Overlay extends JWindow {
 	private static final long serialVersionUID = -2940736930889920645L;
 
 	/** The Constant VERSION. */
-	public static final String VERSION = "1.0";
+	public static final String VERSION = "1.1";
 
 	/** The one and single instance of Overlay. */
 	private static Overlay INSTANCE = null;

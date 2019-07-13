@@ -2,6 +2,8 @@ package xhair;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -72,13 +74,16 @@ public class Settings extends JFrame {
 	private JTabbedPane settingsPane;
 
 	/** The settings panel 2. */
-	private JPanel settingsPanel1, settingsPanel2;
+	private JPanel settingsPanel1, settingsPanel2, settingsPanel3;
 
 	/** The height adjuster. */
 	private SpinSlider widthAdjuster, heightAdjuster;
 
 	/** The outline chooser. */
 	private JColorChooser fillChooser, outlineChooser;
+
+	/** The load button. */
+	private JButton saveButton, loadButton;
 
 	/** The images. */
 	private JComboBox<ImageIcon> images;
@@ -102,11 +107,20 @@ public class Settings extends JFrame {
 		settingsPanel2 = new JPanel();
 		settingsPanel2.setLayout(new BorderLayout());
 
+		settingsPanel3 = new JPanel();
+		settingsPanel3.setLayout(new BorderLayout());
+
 		final JPanel center1 = new JPanel();
 		center1.setLayout(new BoxLayout(center1, BoxLayout.Y_AXIS));
 
 		final JPanel center2 = new JPanel();
 		center2.setLayout(new BoxLayout(center2, BoxLayout.Y_AXIS));
+
+		final JPanel center3 = new JPanel();
+		center3.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 
 		widthAdjuster = new SpinSlider(SpinSlider.WIDTH_ADJUSTER);
 		heightAdjuster = new SpinSlider(SpinSlider.HEIGHT_ADJUSTER);
@@ -116,8 +130,11 @@ public class Settings extends JFrame {
 		outlineChooser = new JColorChooser();
 		outlineChooser.setPreviewPanel(new JPanel());
 
+		saveButton = new JButton("Save Current Crosshair");
+		loadButton = new JButton("Load A Crosshair");
+
 		images = new JComboBox<>(CrosshairImageBank.supplyAllImagesAsIcons());
-		images.setMaximumRowCount(3);
+		images.setMaximumRowCount(6);
 		images.setRenderer(new CustomRenderer());
 
 		widthAdjuster.setBorder(BorderFactory.createTitledBorder("Crosshair Width"));
@@ -142,14 +159,22 @@ public class Settings extends JFrame {
 		center2.add(fillChooser);
 		center2.add(outlineChooser);
 
+		center3.add(saveButton, gbc);
+		center3.add(Box.createVerticalStrut(40), gbc);
+		center3.add(loadButton, gbc);
+
 		settingsPanel1.add(center1, BorderLayout.CENTER);
 		settingsPanel1.add(new SouthPanel(), BorderLayout.SOUTH);
 
 		settingsPanel2.add(center2, BorderLayout.CENTER);
 		settingsPanel2.add(new SouthPanel(), BorderLayout.SOUTH);
 
+		settingsPanel3.add(center3, BorderLayout.CENTER);
+		settingsPanel3.add(new SouthPanel(), BorderLayout.SOUTH);
+
 		settingsPane.add(settingsPanel1, "Crosshair Image / Crosshair Image Size");
 		settingsPane.add(settingsPanel2, "Crosshair Fill Color / Crosshair Outline Color");
+		settingsPane.add(settingsPanel3, "Crosshair Save / Load");
 
 		super.add(settingsPane);
 		super.setResizable(false);

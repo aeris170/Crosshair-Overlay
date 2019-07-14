@@ -17,6 +17,7 @@ A program to draw one of numerous crosshairs on player's screen. Especially help
   * System Tray support.
   * Only works on windowless-fullscreen mode.
   * Ability to add new crosshairs.
+  * Ability to save/load crosshair configurations.
 	
 ## Dependencies: 
   * [JNA](https://github.com/java-native-access/jna)

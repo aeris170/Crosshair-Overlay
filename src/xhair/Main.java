@@ -10,7 +10,17 @@ import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -18,6 +28,9 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import com.sun.jna.platform.win32.Advapi32Util;
+import com.sun.jna.platform.win32.WinReg;
 
 /**
  * Main Class.
@@ -27,6 +40,10 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @since 1.0
  */
 public class Main {
+
+	private static final String EXTRACT_DIRECTORY = "c:\\programdata\\CrosshairOverlay";
+	private static final String REGISTRY_EXTENSION_PATH = ".xhc";
+	private static final String REGISTRY_ICON_PATH = "crosshairconfig\\DefaultIcon";
 
 	/**
 	 * The main method.
@@ -43,6 +60,9 @@ public class Main {
 			Settings.initializeSettings();
 			Main.createAndShowTray();
 		});
+		if (System.getProperty("os.name").startsWith("Windows")) {
+			setCrosshairConfigFileIcon();
+		}
 	}
 
 	/**
@@ -114,4 +134,33 @@ public class Main {
 		}
 		trayIcon.displayMessage("Minimised", "Crosshair-Overlay is running in System Tray.", MessageType.INFO);
 	}
+
+	private static void setCrosshairConfigFileIcon() {
+		File dir = new File(EXTRACT_DIRECTORY);
+		dir.mkdir();
+		try (final JarFile jar = new JarFile(new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()))) {
+			final Enumeration<JarEntry> enumEntries = jar.entries();
+			final List<JarEntry> entryList = Collections.list(enumEntries);
+			final Iterator<JarEntry> listIterator = entryList.iterator();
+			while (listIterator.hasNext()) {
+				final JarEntry file = listIterator.next();
+				File f = new File(dir + File.separator, file.getName());
+				if (file.getName().equals("fileicon.ico")) {
+					try (final InputStream is = jar.getInputStream(file); final FileOutputStream fos = new FileOutputStream(f)) {
+						while (is.available() > 0) {
+							fos.write(is.read());
+						}
+					}
+					break;
+				}
+			}
+		} catch (IOException | URISyntaxException ex) {
+			ex.printStackTrace();
+		}
+		Advapi32Util.registryCreateKey(WinReg.HKEY_CLASSES_ROOT, REGISTRY_EXTENSION_PATH);
+		Advapi32Util.registrySetStringValue(WinReg.HKEY_CLASSES_ROOT, REGISTRY_EXTENSION_PATH, "", "crosshairconfig");
+		Advapi32Util.registryCreateKey(WinReg.HKEY_CLASSES_ROOT, REGISTRY_ICON_PATH);
+		Advapi32Util.registrySetStringValue(WinReg.HKEY_CLASSES_ROOT, REGISTRY_ICON_PATH, "", EXTRACT_DIRECTORY + File.separator + "fileicon.ico");
+	}
+
 }

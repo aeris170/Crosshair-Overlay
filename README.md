@@ -3,7 +3,7 @@ A program to draw one of numerous crosshairs on player's screen. Especially help
 
 ## Install
 
-- Download the [CrosshairOverlay 1.1.jar](https://github.com/aeris170/Crosshair-Overlay/raw/master/CrosshairOverlay%201.1.jar).
+- Download the [CrosshairOverlay 1.2.jar](https://github.com/aeris170/Crosshair-Overlay/raw/master/CrosshairOverlay%201.2.jar).
 
 ## Usage
 

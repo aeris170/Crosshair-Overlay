@@ -51,6 +51,19 @@ public final class Overlay extends JWindow {
 		super.setContentPane(xhair);
 		super.setVisible(true);
 		Overlay.setTransparent(this);
+		new Thread(() -> {
+			while (true) {
+				try {
+					super.setAlwaysOnTop(false);
+					super.setAlwaysOnTop(true);
+					super.repaint();
+					Thread.sleep(60_000);
+				} catch (InterruptedException ex) {
+					Thread.currentThread().interrupt();
+					ex.printStackTrace();
+				}
+			}
+		}).start();
 	}
 
 	/**

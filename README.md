@@ -1,4 +1,5 @@
-# CrosshairOverlay v1.1
+# CrosshairOverlay v1.2
+![social](https://repository-images.githubusercontent.com/138451144/068a9800-bfdb-11e9-96fd-288306178ab3)
 A program to draw one of numerous crosshairs on player's screen. Especially helpful when playing games that disables crosshairs.
 
 ## Install

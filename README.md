@@ -8,7 +8,7 @@ A program to draw one of numerous crosshairs on player's screen. Especially help
 
 ## Usage
 
-- Launch the jar file. If it is your first time running, run in with Administrator rights. This is needed for custom file icons. Works only on Windows.
+- Launch the jar file. (For custom file icons, launch with su or with Administrator rights)
 - Play with the sliders and choosers to adjust the crosshair to your liking.
 
 ## Features:
